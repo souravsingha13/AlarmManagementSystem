@@ -1,0 +1,8 @@
+{
+    "presets": ["@babel/preset-env", "@babel/preset-react"]
+
+  }
+  
+ //this thing is needed for loading jsx into react
+ //without this little things you will get an error that's tell you "Support for the experimental syntax 'jsx' isn't currently enabled " 
+ //.babelcr is a config file
