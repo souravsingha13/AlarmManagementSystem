@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import { Table } from 'reactstrap';
-import { TableBody } from "./tablebody";
+import { TableBody } from "./row";
 
 
 
@@ -159,7 +159,7 @@ export class VanilaTable extends React.Component{
                     <tbody className="table-hover">
                         {
                            this.state.data.map((row)=>(
-                            <TableBody tablebodydata={row} key ={row.alarm_id}/>
+                            <Row tablebodydata={row} key ={row.alarm_id}/>
                            ))
                         
                         }
