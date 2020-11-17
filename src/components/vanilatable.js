@@ -1,14 +1,19 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import { Table } from 'reactstrap';
+import { TableBody } from "./tablebody";
+
 
 
 
 export class VanilaTable extends React.Component{
+    constructor(props) {
+        super(props)
+        this.state = {
+            data:this.props.table_data
+        }
+    } 
     
-    onDoubleClick(){
-        alert("clicked")
-    }
     sortTable(){
         var table, rows, switching, i, x, y, shouldSwitch;
         table = document.getElementById("table");
@@ -111,41 +116,55 @@ export class VanilaTable extends React.Component{
             }
 
         }
+        selectionBar(){
+            var input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("selectionbar");
+                filter = input.value.toLowerCase();
+                table = document.getElementById("table");
+                tr = table.getElementsByTagName("tr");
+                // Loop through all table rows, and hide those who don't match with the query
+                for(i=0;i<tr.length;i++){
+                    td = tr[i].getElementsByTagName("td")[1];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }   
+
+                }           
+        }
 
     render(){
-        console.log(this.props.table_data[0].id)
         return(
             < div id = "container">
-                <p><button onClick={this.sortTable}>Priority Sort</button></p>
-                <p><button onClick={this.sortDate}>Date_Time Sort</button></p>
-                <p><button onClick={this.sortState}>State Sort</button></p>
+                <select className="custom-select" id = "selectionbar" onChange={this.selectionBar}>
+                <option></option> 
+                    <option>Acknowledged</option> 
+                    <option>Unacknowledged</option>  
+                    <option>Actioned</option> 
+                </select> 
                 <Table id ="table">
                     <thead className="table-dark">
                         <tr>
                             <th>ID</th>
-                            <th>Alarm State</th>
+                            <th onClick={this.sortState}>Alarm State</th>
                             <th>Alarm Text</th>
-                            <th>Date Time</th>
-                            <th>Priority</th>
+                            <th onClick={this.sortDate}>Date Time</th>
+                            <th onClick={this.sortTable}>Priority</th>
                         </tr>
                     </thead>
                     <tbody className="table-hover">
                         {
-                           this.props.table_data.map((row)=>(
-                            <tr key={row.id} className={(row.alarm_state == "acknowledge")?"table-success":(row.alarm_state=="unacknowledge")?"table-danger":"table-primary"}
-                            onDoubleClick={this.onDoubleClick} 
-                            >
-                                <td scope="row">{row.alarm_id}</td>
-                                <td>{row.state}</td>
-                                <td>{row.message}</td>
-                                <td>{row.timestamp}</td>
-                                <td>{row.priority}</td>
-                            </tr>
+                           this.state.data.map((row)=>(
+                            <TableBody tablebodydata={row} key ={row.alarm_id}/>
                            ))
                         
                         }
                     </tbody>
-
+                
                 </Table>
 
             </div>
