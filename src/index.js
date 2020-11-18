@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DataTable from "./components/table";
-import BasicTable from "./components/basictable";
-import EnhancedTableHead from "./components/netable";
-import { VanilaTable } from './components/vanilatable';
+import { Table } from './components/table';
 import { DataFatcher} from './components/datafatcher'
 
-
+//Start of the project by callig DataFatcher component.
+//DataFatcher's job is to fatch all kind of data.
+//Here we fatch data through http protocal and websocket.
 
 ReactDOM.render(<DataFatcher/>, document.getElementById('root'));
 
